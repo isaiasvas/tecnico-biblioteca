@@ -60,7 +60,6 @@ class Categoria(models.Model):
             return f'{self.parent} > {self.nome}'
         return self.nome
 
-
 class Livro(models.Model):
     titulo = models.CharField(max_length=100)
     isbn = models.CharField(max_length=14, unique=True)
