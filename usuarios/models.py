@@ -1,4 +1,8 @@
+#usuarios.models
+
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Endereco(models.Model):
     complemento = models.CharField(max_length=100, null=True, blank=True)
@@ -9,6 +13,13 @@ class Endereco(models.Model):
     estado = models.CharField(max_length=100)
     pais = models.CharField(max_length=100)
     cep = models.CharField(max_length=100)
+
+    adicionado_por = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='enderecos_adicionados',
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -19,6 +30,7 @@ class Endereco(models.Model):
 
     def __str__(self):
         return f'{self.logradouro}, {self.numero} - {self.bairro}, {self.cidade}/{self.estado}'
+
 
 class Usuario(models.Model):
 
@@ -42,6 +54,12 @@ class Usuario(models.Model):
         max_length=20,
         choices=TipoUsuario.choices,
         default=TipoUsuario.CONVIDADO,
+    )
+
+    adicionado_por = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='usuarios_adicionados',
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
