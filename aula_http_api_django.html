@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn .2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .kw { color: #5b8af0; }
+  .st { color: #e08742; }
+  .cm { color: #9ca3af; }
+  .kv { color: #6cb86a; }
+  pre { margin: 0; }
+</style>
+</head>
+<body class="bg-transparent text-gray-900 text-sm">
+<div class="px-8 py-4">
+  <h2 class="text-lg font-medium mb-1">Fundamentos de API para Django REST Framework</h2>
+  <p class="text-xs text-gray-400 mb-6">Pré-aula · Antes de ver Views, URLs e Serializers</p>
+
+  <!-- Nav -->
+  <div class="flex flex-wrap gap-1.5 mb-8">
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer active bg-blue-50 text-blue-600 border-blue-200 font-medium" onclick="show('http', this)">1 · HTTP</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('crud', this)">2 · CRUD</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('rest', this)">3 · REST vs RESTful</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('metodos', this)">4 · Métodos HTTP</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('status', this)">5 · Status Codes</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('anatomia', this)">6 · Anatomia da API</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('sim', this)">7 · Simulador</button>
+    <button class="nav-btn px-3.5 py-1.5 text-xs rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-all cursor-pointer" onclick="show('preview', this)">8 · Preview Django</button>
+  </div>
+
+  <!-- 1. HTTP -->
+  <div id="sec-http" class="section active">
+    <h3 class="text-sm font-medium mt-6 mb-2">O que é HTTP?</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">HTTP (HyperText Transfer Protocol) é o protocolo de comunicação entre clientes e servidores na web. É como um "idioma" que seu browser e um servidor Django falam juntos.</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3">
+      <div class="bg-gray-50 rounded-md p-3">
+        <div class="text-[11px] text-gray-400 mb-1">Cliente</div>
+        <div class="text-sm font-medium">Faz a requisição</div>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3">
+        <div class="text-[11px] text-gray-400 mb-1">Servidor</div>
+        <div class="text-sm font-medium">Processa e responde</div>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3">
+        <div class="text-[11px] text-gray-400 mb-1">Protocolo</div>
+        <div class="text-sm font-medium">Regras da conversa</div>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3">
+        <div class="text-[11px] text-gray-400 mb-1">Stateless</div>
+        <div class="text-sm font-medium">Cada request é independente</div>
+      </div>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Anatomia de uma requisição HTTP</h3>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="kw">GET</span> /api/produtos/1/ <span class="kv">HTTP/1.1</span>
+<span class="kw">Host:</span> <span class="st">meusite.com</span>
+<span class="kw">Authorization:</span> <span class="st">Bearer eyJhbGci...</span>
+<span class="kw">Content-Type:</span> <span class="st">application/json</span>
+<span class="kw">Accept:</span> <span class="st">application/json</span></pre>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Anatomia de uma resposta HTTP</h3>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="kv">HTTP/1.1 200 OK</span>
+<span class="kw">Content-Type:</span> <span class="st">application/json</span>
+
+{
+  <span class="st">"id"</span>: 1,
+  <span class="st">"nome"</span>: <span class="st">"Notebook Pro"</span>,
+  <span class="st">"preco"</span>: <span class="kv">2999.90</span>
+}</pre>
+    </div>
+
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 No Django REST Framework, você não precisa escrever essas strings manualmente — o framework monta e interpreta isso por você automaticamente.
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Headers importantes</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Header</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Para que serve</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Exemplo</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100 leading-snug"><code>Content-Type</code></td><td class="py-2 px-2.5 border-b border-gray-100">Tipo do corpo da requisição</td><td class="py-2 px-2.5 border-b border-gray-100"><code>application/json</code></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100 leading-snug"><code>Accept</code></td><td class="py-2 px-2.5 border-b border-gray-100">Tipo de resposta esperada</td><td class="py-2 px-2.5 border-b border-gray-100"><code>application/json</code></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100 leading-snug"><code>Authorization</code></td><td class="py-2 px-2.5 border-b border-gray-100">Token de autenticação</td><td class="py-2 px-2.5 border-b border-gray-100"><code>Bearer token123</code></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 leading-snug"><code>Content-Length</code></td><td class="py-2 px-2.5">Tamanho do corpo</td><td class="py-2 px-2.5"><code>128</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. CRUD -->
+  <div id="sec-crud" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">O que é CRUD?</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">CRUD descreve as 4 operações básicas de qualquer sistema que trabalha com dados. Toda API que você vai criar no Django vai girar em torno dessas 4 ações.</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3">
+      <div class="bg-gray-50 rounded-md p-3 border-l-[3px] border-green-400">
+        <div class="text-[11px] text-gray-400 mb-1">C — Create</div>
+        <div class="text-sm font-medium text-green-600">Criar registro</div>
+        <p class="text-[11px] mt-1 text-gray-400">Adicionar novo produto, usuário, pedido...</p>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3 border-l-[3px] border-blue-400">
+        <div class="text-[11px] text-gray-400 mb-1">R — Read</div>
+        <div class="text-sm font-medium text-blue-600">Ler / listar</div>
+        <p class="text-[11px] mt-1 text-gray-400">Buscar um produto, listar todos...</p>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3 border-l-[3px] border-amber-400">
+        <div class="text-[11px] text-gray-400 mb-1">U — Update</div>
+        <div class="text-sm font-medium text-amber-600">Atualizar registro</div>
+        <p class="text-[11px] mt-1 text-gray-400">Editar preço, nome, status...</p>
+      </div>
+      <div class="bg-gray-50 rounded-md p-3 border-l-[3px] border-red-400">
+        <div class="text-[11px] text-gray-400 mb-1">D — Delete</div>
+        <div class="text-sm font-medium text-red-600">Deletar registro</div>
+        <p class="text-[11px] mt-1 text-gray-400">Remover produto, conta, item...</p>
+      </div>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">CRUD mapeado para HTTP + Django</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">CRUD</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Método HTTP</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">URL típica</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">View Django</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Create</span></td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-amber-50 text-amber-600 font-medium text-[11px]">POST</span></td><td class="py-2 px-2.5 border-b border-gray-100"><code>/api/produtos/</code></td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Recebe JSON, cria objeto no banco</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Read (lista)</span></td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-green-50 text-green-600 font-medium text-[11px]">GET</span></td><td class="py-2 px-2.5 border-b border-gray-100"><code>/api/produtos/</code></td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Retorna lista de objetos</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Read (detalhe)</span></td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-green-50 text-green-600 font-medium text-[11px]">GET</span></td><td class="py-2 px-2.5 border-b border-gray-100"><code>/api/produtos/1/</code></td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Retorna um objeto específico</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Update (total)</span></td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-blue-50 text-blue-600 font-medium text-[11px]">PUT</span></td><td class="py-2 px-2.5 border-b border-gray-100"><code>/api/produtos/1/</code></td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Substitui todos os campos</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Update (parcial)</span></td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-purple-50 text-purple-700 font-medium text-[11px]">PATCH</span></td><td class="py-2 px-2.5 border-b border-gray-100"><code>/api/produtos/1/</code></td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Atualiza só os campos enviados</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5"><span class="inline-block px-2.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium text-[11px]">Delete</span></td><td class="py-2 px-2.5"><span class="inline-block px-2.5 py-0.5 rounded bg-red-50 text-red-600 font-medium text-[11px]">DELETE</span></td><td class="py-2 px-2.5"><code>/api/produtos/1/</code></td><td class="py-2 px-2.5 leading-snug">Remove o objeto do banco</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 Percebem que a URL <code>/api/produtos/</code> e <code>/api/produtos/1/</code> repetem? Só o <strong>método HTTP</strong> muda o comportamento — isso é o coração do REST.
+    </div>
+  </div>
+
+  <!-- 3. REST vs RESTful -->
+  <div id="sec-rest" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">REST vs RESTful — qual a diferença?</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5"><strong>REST</strong> (Representational State Transfer) é um conjunto de princípios arquiteturais definidos por Roy Fielding em 2000. <strong>RESTful</strong> é como chamamos uma API que segue esses princípios corretamente.</p>
+
+    <div class="grid grid-cols-2 gap-2.5 mb-3">
+      <div class="bg-red-50 border border-red-200 text-red-700 rounded-md px-4 py-3 text-xs leading-relaxed">
+        <div class="text-[10px] font-semibold uppercase tracking-wide mb-1 opacity-70">❌ Não RESTful</div>
+        GET /pegarTodosProdutos<br>
+        POST /criarNovoProduto<br>
+        GET /deletarProduto?id=1<br>
+        POST /atualizarProduto/1
+      </div>
+      <div class="bg-green-50 border border-green-200 text-green-700 rounded-md px-4 py-3 text-xs leading-relaxed">
+        <div class="text-[10px] font-semibold uppercase tracking-wide mb-1 opacity-70">✅ RESTful</div>
+        GET /api/produtos/<br>
+        POST /api/produtos/<br>
+        DELETE /api/produtos/1/<br>
+        PUT /api/produtos/1/
+      </div>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Os 6 princípios REST</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">#</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Princípio</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">O que significa</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100">1</td><td class="py-2 px-2.5 border-b border-gray-100 font-medium">Stateless</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Cada requisição carrega toda informação necessária — o servidor não guarda sessão</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100">2</td><td class="py-2 px-2.5 border-b border-gray-100 font-medium">Client-Server</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Frontend e backend são separados e se comunicam apenas via API</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100">3</td><td class="py-2 px-2.5 border-b border-gray-100 font-medium">Uniform Interface</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">URLs representam recursos; métodos HTTP definem a ação</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100">4</td><td class="py-2 px-2.5 border-b border-gray-100 font-medium">Cacheable</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Respostas podem ser cacheadas para melhorar performance</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100">5</td><td class="py-2 px-2.5 border-b border-gray-100 font-medium">Layered System</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">O cliente não sabe se fala com o servidor final ou um intermediário</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5">6</td><td class="py-2 px-2.5 font-medium">Code on Demand</td><td class="py-2 px-2.5 leading-snug">(Opcional) Servidor pode enviar código executável ao cliente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Recursos vs Ações — a virada de chave</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">No REST, a URL identifica um <strong>recurso</strong> (substantivo), e o método HTTP indica a <strong>ação</strong> (verbo).</p>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="cm"># ✅ REST — substantivos nas URLs</span>
+<span class="kw">GET</span>    /api/produtos/        <span class="cm"># → listar produtos</span>
+<span class="kw">POST</span>   /api/produtos/        <span class="cm"># → criar produto</span>
+<span class="kw">GET</span>    /api/produtos/<span class="kv">1</span>/      <span class="cm"># → detalhe do produto 1</span>
+<span class="kw">PUT</span>    /api/produtos/<span class="kv">1</span>/      <span class="cm"># → substituir produto 1</span>
+<span class="kw">PATCH</span>  /api/produtos/<span class="kv">1</span>/      <span class="cm"># → atualizar parcialmente</span>
+<span class="kw">DELETE</span> /api/produtos/<span class="kv">1</span>/      <span class="cm"># → deletar produto 1</span></pre>
+    </div>
+  </div>
+
+  <!-- 4. Métodos -->
+  <div id="sec-metodos" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">Os 5 métodos HTTP no Django REST Framework</h3>
+
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Método</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Idempotente?</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Tem body?</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Uso no Django</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Retorno típico</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-green-50 text-green-600 font-medium text-[11px]">GET</span></td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100">❌ Não</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Listar ou detalhar objetos</td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">200 OK</span></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-amber-50 text-amber-600 font-medium text-[11px]">POST</span></td><td class="py-2 px-2.5 border-b border-gray-100">❌ Não</td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Criar novo objeto</td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">201 Created</span></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-blue-50 text-blue-600 font-medium text-[11px]">PUT</span></td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Substituir objeto inteiro</td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">200 OK</span></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2.5 py-0.5 rounded bg-purple-50 text-purple-700 font-medium text-[11px]">PATCH</span></td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100">✅ Sim</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Atualizar campos específicos</td><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">200 OK</span></td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5"><span class="inline-block px-2.5 py-0.5 rounded bg-red-50 text-red-600 font-medium text-[11px]">DELETE</span></td><td class="py-2 px-2.5">✅ Sim</td><td class="py-2 px-2.5">❌ Não</td><td class="py-2 px-2.5 leading-snug">Remover objeto</td><td class="py-2 px-2.5"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">204 No Content</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 <strong>Idempotente</strong> = fazer a mesma operação várias vezes dá o mesmo resultado. Deletar o produto 1 duas vezes = mesmo efeito de uma vez. Criar com POST duas vezes = dois registros duplicados.
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">PUT vs PATCH — a diferença prática</h3>
+    <div class="grid grid-cols-2 gap-2.5 mb-3">
+      <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-md px-4 py-3 text-xs leading-relaxed">
+        <div class="text-[10px] font-semibold uppercase tracking-wide mb-1 opacity-70">PUT — substitui tudo</div>
+        <code class="text-[11px]">&#123;<br>
+  "nome": "Novo Nome",<br>
+  "preco": 99.90,<br>
+  "estoque": 10  ← obrigatório<br>
+&#125;</code>
+      </div>
+      <div class="bg-purple-50 border border-purple-200 text-purple-700 rounded-md px-4 py-3 text-xs leading-relaxed">
+        <div class="text-[10px] font-semibold uppercase tracking-wide mb-1 opacity-70">PATCH — só o que mudou</div>
+        <code class="text-[11px]">&#123;<br>
+  "preco": 89.90  ← só isso<br>
+&#125;</code>
+      </div>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">Exemplo de body no POST</h3>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="cm"># Requisição POST /api/produtos/</span>
+<span class="kw">Content-Type:</span> <span class="st">application/json</span>
+
+{
+  <span class="st">"nome"</span>: <span class="st">"Mouse Gamer"</span>,
+  <span class="st">"preco"</span>: <span class="kv">149.90</span>,
+  <span class="st">"estoque"</span>: <span class="kv">50</span>,
+  <span class="st">"categoria"</span>: <span class="kv">3</span>
+}
+
+<span class="cm"># Resposta 201 Created</span>
+{
+  <span class="st">"id"</span>: <span class="kv">12</span>,
+  <span class="st">"nome"</span>: <span class="st">"Mouse Gamer"</span>,
+  <span class="st">"preco"</span>: <span class="st">"149.90"</span>,
+  <span class="st">"estoque"</span>: <span class="kv">50</span>,
+  <span class="st">"categoria"</span>: <span class="kv">3</span>,
+  <span class="st">"criado_em"</span>: <span class="st">"2025-06-09T14:30:00Z"</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- 5. Status Codes -->
+  <div id="sec-status" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">Códigos de status HTTP</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">O servidor sempre responde com um código numérico que resume o resultado. O DRF cuida disso automaticamente na maioria dos casos.</p>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">2xx — Sucesso</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Código</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Nome</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Quando usar</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">200 OK</span></td><td class="py-2 px-2.5 border-b border-gray-100">OK</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">GET, PUT, PATCH bem-sucedidos</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">201 Created</span></td><td class="py-2 px-2.5 border-b border-gray-100">Criado</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">POST que criou um novo objeto</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5"><span class="inline-block px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium text-[11px]">204 No Content</span></td><td class="py-2 px-2.5">Sem conteúdo</td><td class="py-2 px-2.5 leading-snug">DELETE bem-sucedido (sem body na resposta)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">4xx — Erro do cliente</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Código</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Nome</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Quando ocorre</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">400 Bad Request</span></td><td class="py-2 px-2.5 border-b border-gray-100">Requisição inválida</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Dados inválidos no body (serializer rejeitou)</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">401 Unauthorized</span></td><td class="py-2 px-2.5 border-b border-gray-100">Não autenticado</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Token ausente ou inválido</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">403 Forbidden</span></td><td class="py-2 px-2.5 border-b border-gray-100">Sem permissão</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Autenticado, mas sem permissão</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">404 Not Found</span></td><td class="py-2 px-2.5 border-b border-gray-100">Não encontrado</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Objeto com esse ID não existe</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">405 Method Not Allowed</span></td><td class="py-2 px-2.5 border-b border-gray-100">Método não permitido</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Tentou DELETE numa view que não permite</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">422 Unprocessable</span></td><td class="py-2 px-2.5">Não processável</td><td class="py-2 px-2.5 leading-snug">Dados bem formados mas inválidos semanticamente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">5xx — Erro do servidor</h3>
+    <div class="bg-white overflow-x-auto border border-gray-100 rounded-xl px-5 py-4 mb-3">
+      <table class="w-full text-xs border-collapse">
+        <thead><tr>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Código</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Nome</th>
+          <th class="text-left py-2 px-2.5 border-b border-gray-200 font-medium text-gray-500">Quando ocorre</th>
+        </tr></thead>
+        <tbody>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5 border-b border-gray-100"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">500 Internal Server Error</span></td><td class="py-2 px-2.5 border-b border-gray-100">Erro interno</td><td class="py-2 px-2.5 border-b border-gray-100 leading-snug">Exception não tratada no Django</td></tr>
+          <tr class="hover:bg-gray-50"><td class="py-2 px-2.5"><span class="inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-600 font-medium text-[11px]">503 Service Unavailable</span></td><td class="py-2 px-2.5">Indisponível</td><td class="py-2 px-2.5 leading-snug">Servidor sobrecarregado ou em manutenção</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 No DRF, o <code>Response(serializer.data)</code> retorna 200, o <code>Response(data, status=201)</code> retorna 201. Você controla isso — mas o <code>ModelViewSet</code> já faz isso automaticamente.
+    </div>
+  </div>
+
+  <!-- 6. Anatomia da API -->
+  <div id="sec-anatomia" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">Como uma API Django funciona — visão geral</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">Antes de ver cada peça em detalhe nas próximas aulas, é importante entender o fluxo completo de uma requisição no Django REST Framework.</p>
+
+    <div class="bg-white border border-gray-100 rounded-xl px-5 py-4 mb-4">
+      <div class="flex flex-col gap-2.5">
+        <div class="flex items-center gap-2.5">
+          <div class="min-w-[32px] h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-medium text-xs">1</div>
+          <div class="text-xs"><strong>urls.py</strong> — <span class="text-gray-500">Recebe a URL, decide qual view vai lidar com ela</span></div>
+        </div>
+        <div class="ml-4 w-px h-3 bg-gray-200"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="min-w-[32px] h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-medium text-xs">2</div>
+          <div class="text-xs"><strong>views.py</strong> — <span class="text-gray-500">Recebe a requisição, chama o model e o serializer, retorna a response</span></div>
+        </div>
+        <div class="ml-4 w-px h-3 bg-gray-200"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="min-w-[32px] h-8 rounded-full bg-purple-50 text-purple-700 flex items-center justify-center font-medium text-xs">3</div>
+          <div class="text-xs"><strong>serializers.py</strong> — <span class="text-gray-500">Converte objetos Python/Django ↔ JSON, valida dados</span></div>
+        </div>
+        <div class="ml-4 w-px h-3 bg-gray-200"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="min-w-[32px] h-8 rounded-full bg-green-50 text-green-600 flex items-center justify-center font-medium text-xs">4</div>
+          <div class="text-xs"><strong>models.py</strong> — <span class="text-gray-500">Define a estrutura dos dados e se comunica com o banco</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">O que cada peça faz (preview)</h3>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="cm"># urls.py — mapeia URL → view</span>
+<span class="kw">path</span>(<span class="st">'produtos/'</span>, ProdutoListView.as_view())
+
+<span class="cm"># views.py — lógica da requisição</span>
+<span class="kw">class</span> ProdutoListView(ListAPIView):
+    queryset = Produto.objects.<span class="kv">all</span>()
+    serializer_class = ProdutoSerializer
+
+<span class="cm"># serializers.py — JSON ↔ Python</span>
+<span class="kw">class</span> ProdutoSerializer(ModelSerializer):
+    <span class="kw">class</span> Meta:
+        model = Produto
+        fields = [<span class="st">'id'</span>, <span class="st">'nome'</span>, <span class="st">'preco'</span>]</pre>
+    </div>
+
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 Verão cada um desses arquivos em detalhes nas próximas aulas. Por agora, o importante é saber que eles existem e qual o papel de cada um.
+    </div>
+
+    <h3 class="text-sm font-medium mt-6 mb-2">JSON — a língua franca das APIs</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-2.5">APIs REST usam JSON para trocar dados. O serializer do Django é quem faz essa conversão.</p>
+    <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed mb-3 overflow-x-auto">
+      <pre><span class="cm"># Objeto Django (Python)</span>
+produto = Produto(id=<span class="kv">1</span>, nome=<span class="st">"Notebook"</span>, preco=<span class="kv">Decimal</span>(<span class="st">"2999.90"</span>))
+
+<span class="cm"># JSON que a API retorna</span>
+{
+  <span class="st">"id"</span>: <span class="kv">1</span>,
+  <span class="st">"nome"</span>: <span class="st">"Notebook"</span>,
+  <span class="st">"preco"</span>: <span class="st">"2999.90"</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- 7. Simulador -->
+  <div id="sec-sim" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">Simulador de requisições REST</h3>
+    <p class="text-xs leading-relaxed text-gray-500 mb-3">Escolha o método, defina o endpoint e veja como seria a interação com uma API de produtos.</p>
+
+    <div class="flex flex-wrap gap-2 mb-3 items-center">
+      <select id="sim-m" class="px-3 py-1.5 border border-gray-200 rounded-md bg-transparent text-xs font-medium cursor-pointer text-gray-700" onchange="updateSim()">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="PATCH">PATCH</option>
+        <option value="DELETE">DELETE</option>
+      </select>
+      <input id="sim-e" class="flex-1 min-w-[200px] px-2.5 py-1.5 text-xs rounded-md border border-gray-200 bg-white text-gray-800 font-mono" value="/api/produtos/" oninput="updateSim()">
+      <button class="px-3.5 py-1.5 rounded-md border border-blue-200 bg-blue-50 text-blue-600 text-xs font-medium cursor-pointer hover:bg-blue-100 transition-colors" onclick="runSim()">Simular ↗</button>
+    </div>
+
+    <div id="sim-hint" class="text-[11px] text-gray-400 mb-2.5"></div>
+
+    <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Resposta simulada</div>
+    <div id="sim-res" class="bg-gray-50 rounded-md p-4 font-mono text-[12px] leading-relaxed whitespace-pre overflow-x-auto min-h-[80px] text-gray-700">Clique em "Simular" para ver a resposta...</div>
+  </div>
+
+  <!-- 8. Preview Django -->
+  <div id="sec-preview" class="section">
+    <h3 class="text-sm font-medium mt-6 mb-2">O que vem a seguir nas suas aulas</h3>
+
+    <div class="bg-white border border-gray-100 rounded-xl px-5 py-4 mb-2.5">
+      <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">Próxima aula: URLs</div>
+      <p class="text-xs leading-relaxed text-gray-500 mb-2">Como o Django recebe uma URL e decide qual view vai processar a requisição. O DRF tem o <code>DefaultRouter</code> que gera automaticamente todas as URLs do CRUD.</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed overflow-x-auto mt-2">
+        <pre><span class="kw">router</span> = DefaultRouter()
+router.register(<span class="st">r'produtos'</span>, ProdutoViewSet)</pre>
+      </div>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-xl px-5 py-4 mb-2.5">
+      <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">Views</div>
+      <p class="text-xs leading-relaxed text-gray-500">As views no DRF recebem a requisição HTTP, identificam o método (GET/POST/etc), chamam o serializer e retornam uma <code>Response</code>. Você vai aprender <code>APIView</code>, <code>GenericAPIView</code> e <code>ViewSet</code>.</p>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-xl px-5 py-4 mb-2.5">
+      <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">Serializers</div>
+      <p class="text-xs leading-relaxed text-gray-500 mb-2">O serializer é a peça que converte seus models Django para JSON (e JSON de volta para objetos). Ele também valida os dados recebidos antes de salvar no banco.</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 font-mono text-[12px] leading-relaxed overflow-x-auto mt-2">
+        <pre><span class="cm"># Validação automática</span>
+serializer = ProdutoSerializer(data=request.data)
+<span class="kw">if</span> serializer.is_valid():
+    serializer.save()  <span class="cm"># → cria no banco</span></pre>
+      </div>
+    </div>
+
+    <div class="border-l-[3px] border-blue-400 pl-3 py-2 bg-blue-50 rounded-r-md text-xs text-blue-700 my-3">
+      💡 Com essa base de HTTP, CRUD, REST e métodos, as views, URLs e serializers do Django vão fazer muito mais sentido. Você já sabe <em>por que</em> cada coisa existe.
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200', 'font-medium');
+    b.classList.add('text-gray-500', 'border-gray-200');
+  });
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200', 'font-medium');
+  btn.classList.remove('text-gray-500', 'border-gray-200');
+}
+
+const simData = {
+  'GET /api/produtos/': {
+    status: '200 OK', body: `[
+  { "id": 1, "nome": "Notebook Pro", "preco": "2999.90", "estoque": 5 },
+  { "id": 2, "nome": "Mouse Gamer", "preco": "149.90", "estoque": 50 },
+  { "id": 3, "nome": "Teclado Mecânico", "preco": "349.90", "estoque": 20 }
+]`
+  },
+  'GET /api/produtos/1/': { status: '200 OK', body: `{ "id": 1, "nome": "Notebook Pro", "preco": "2999.90", "estoque": 5 }` },
+  'POST /api/produtos/': { status: '201 Created', body: `{ "id": 4, "nome": "Monitor 4K", "preco": "1899.90", "estoque": 8 }` },
+  'PUT /api/produtos/1/': { status: '200 OK', body: `{ "id": 1, "nome": "Notebook Pro Max", "preco": "3299.90", "estoque": 3 }` },
+  'PATCH /api/produtos/1/': { status: '200 OK', body: `{ "id": 1, "nome": "Notebook Pro", "preco": "2799.90", "estoque": 5 }` },
+  'DELETE /api/produtos/1/': { status: '204 No Content', body: `(sem body na resposta)` }
+};
+
+const hints = {
+  GET: 'GET não tem body. Usado para leitura.',
+  POST: 'POST envia JSON no body para criar um novo recurso.',
+  PUT: 'PUT envia todos os campos do objeto para substituir.',
+  PATCH: 'PATCH envia apenas os campos que precisam ser atualizados.',
+  DELETE: 'DELETE não tem body. Remove o recurso indicado na URL.'
+};
+
+function updateSim() {
+  const m = document.getElementById('sim-m').value;
+  document.getElementById('sim-hint').textContent = hints[m] || '';
+}
+
+function runSim() {
+  const m = document.getElementById('sim-m').value;
+  const e = document.getElementById('sim-e').value.trim();
+  const key = m + ' ' + e;
+  const found = simData[key];
+  const el = document.getElementById('sim-res');
+  if (found) {
+    el.textContent = 'HTTP/1.1 ' + found.status + '\nContent-Type: application/json\n\n' + found.body;
+  } else {
+    const guessId = e.match(/\/(\d+)\/?$/);
+    if (guessId) {
+      el.textContent = 'HTTP/1.1 200 OK\nContent-Type: application/json\n\n{ "id": ' + guessId[1] + ', "nome": "Produto #' + guessId[1] + '", "preco": "99.90" }';
+    } else {
+      el.textContent = 'HTTP/1.1 200 OK\nContent-Type: application/json\n\n[]  ← lista vazia ou endpoint customizado';
+    }
+  }
+}
+
+updateSim();
+</script>
+</body>
+</html>
