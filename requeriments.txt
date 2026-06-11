@@ -1,2 +1,5 @@
-pip install django
-pip install faker
+Django>=6.0.3
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+django-filter
