@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'livros',
     'usuarios',
-    'emprestimos'
+    'emprestimos',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -83,8 +84,14 @@ REST_FRAMEWORK = {
         'anon': '100/day',
         'user': '1000/day',
     },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Biblioteca API',
+    'DESCRIPTION': 'API para gerenciamento de livros, usuários e empréstimos',
+    'VERSION': '1.0.0',
+}
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=8),
