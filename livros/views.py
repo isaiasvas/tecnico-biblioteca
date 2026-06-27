@@ -15,7 +15,7 @@ from config.permissions import IsStaffOrReadOnly
 class AutorViewSet(viewsets.ModelViewSet):
     queryset = Autor.objects.select_related('adicionado_por').all()
     serializer_class = AutorSerializer
-    permission_classes = [IsStaffOrReadOnly]
+    ##permission_classes = [IsStaffOrReadOnly]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['primeiro_nome', 'ultimo_nome', 'nacionalidade']
@@ -26,7 +26,7 @@ class AutorViewSet(viewsets.ModelViewSet):
 class EditoraViewSet(viewsets.ModelViewSet):
     queryset = Editora.objects.select_related('adicionado_por').all()
     serializer_class = EditoraSerializer
-    permission_classes = [IsStaffOrReadOnly]
+    #permission_classes = [IsStaffOrReadOnly]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['nome']
@@ -37,7 +37,7 @@ class EditoraViewSet(viewsets.ModelViewSet):
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.select_related('parent', 'adicionado_por').all()
     serializer_class = CategoriaSerializer
-    permission_classes = [IsStaffOrReadOnly]
+    #permission_classes = [IsStaffOrReadOnly]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
     search_fields = ['nome']
@@ -54,7 +54,7 @@ class LivroViewSet(viewsets.ModelViewSet):
         .all()
     )
     serializer_class = LivroSerializer
-    permission_classes = [IsStaffOrReadOnly]
+    #permission_classes = [IsStaffOrReadOnly]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
     search_fields = ['titulo', 'isbn', 'autor__primeiro_nome', 'autor__ultimo_nome']

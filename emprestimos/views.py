@@ -19,7 +19,7 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
     POST /emprestimos/{id}/devolver/
         body: { "devolvido_at": "YYYY-MM-DD", "multa_avaria": 0.0 }
     """
-    permission_classes = [IsAuthenticatedStaff]
+    #permission_classes = [IsAuthenticatedStaff]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
     search_fields = [
