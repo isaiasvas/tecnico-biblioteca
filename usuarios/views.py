@@ -10,7 +10,7 @@ from config.permissions import IsStaffOrReadOnly, IsAuthenticatedStaff
 class EnderecoViewSet(viewsets.ModelViewSet):
     queryset = Endereco.objects.select_related('adicionado_por').all()
     serializer_class = EnderecoSerializer
-    permission_classes = [IsAuthenticatedStaff]
+    #permission_classes = [IsAuthenticatedStaff]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['logradouro', 'bairro', 'cidade', 'estado', 'cep']
@@ -26,7 +26,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         .all()
     )
     serializer_class = UsuarioSerializer
-    permission_classes = [IsStaffOrReadOnly]
+    #permission_classes = [IsStaffOrReadOnly]
     pagination_class = StandardPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
     search_fields = ['nome_completo', 'documento', 'email']
