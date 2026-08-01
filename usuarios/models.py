@@ -18,6 +18,8 @@ class Endereco(models.Model):
         User,
         on_delete=models.PROTECT,
         related_name='enderecos_adicionados',
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,6 +62,8 @@ class Usuario(models.Model):
         User,
         on_delete=models.PROTECT,
         related_name='usuarios_adicionados',
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
