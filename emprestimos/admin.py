@@ -17,7 +17,7 @@ class EmprestimoAdmin(admin.ModelAdmin):
     )
 
     search_fields = (
-        'usuario__nome',
+        'usuario__nome_completo',
         'livro__titulo',
         'adicionado_por__username',
     )

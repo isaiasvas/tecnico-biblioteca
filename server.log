@@ -1,0 +1,318 @@
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\livros\models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 09:48:31
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\livros\serializers.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 10:53:42
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\emprestimos\serializers.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 10:53:48
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+[29/Aug/2026 10:54:07] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+Internal Server Error: /api/v1/livros/
+Traceback (most recent call last):
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: livros_livro.quantidade_disponivel
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\generics.py", line 175, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\pagination.py", line 213, in paginate_queryset
+    return list(self.page)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\paginator.py", line 319, in __len__
+    return len(self.object_list)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: livros_livro.quantidade_disponivel
+[29/Aug/2026 10:54:07] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 500 197213
+Internal Server Error: /api/v1/emprestimos/
+Traceback (most recent call last):
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: livros_livro.quantidade_disponivel
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\generics.py", line 175, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\pagination.py", line 213, in paginate_queryset
+    return list(self.page)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\paginator.py", line 319, in __len__
+    return len(self.object_list)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\isaias.vasilva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: livros_livro.quantidade_disponivel
+[29/Aug/2026 10:54:08] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 500 210520
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\emprestimos\views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 1 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): livros.
+Run 'python manage.py migrate' to apply them.
+August 29, 2026 - 10:54:06
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or AS[29/Aug/2026 10:54:13] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:54:13] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:54:13] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:54:27] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:54:27] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:54:27] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:54:38] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:54:38] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:54:38] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:54:42] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:54:42] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:54:42] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:54:53] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:54:53] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:54:53] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:55:25] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:55:25] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:55:25] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:59:08] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:59:08] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 10:59:08] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 11:02:58] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 11:02:58] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 11:02:58] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 11:03:12] "OPTIONS /api/v1/emprestimos/4/devolver/ HTTP/1.1" 200 0
+[29/Aug/2026 11:03:12] "POST /api/v1/emprestimos/4/devolver/ HTTP/1.1" 200 412
+[29/Aug/2026 11:03:12] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 232
+[29/Aug/2026 11:03:12] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 11:03:12] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 11:03:12] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 232
+[29/Aug/2026 11:03:23] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 11:03:23] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 11:03:23] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 232
+[29/Aug/2026 11:03:32] "GET /api/v1/categorias/?page_size=100 HTTP/1.1" 200 374
+[29/Aug/2026 11:03:32] "GET /api/v1/autores/?page_size=100 HTTP/1.1" 200 271
+[29/Aug/2026 11:03:32] "GET /api/v1/editoras/?page_size=100 HTTP/1.1" 200 224
+[29/Aug/2026 11:03:32] "GET /api/v1/livros/ HTTP/1.1" 200 574
+[29/Aug/2026 11:03:41] "OPTIONS /api/v1/livros/3/ HTTP/1.1" 200 0
+[29/Aug/2026 11:03:41] "PATCH /api/v1/livros/3/ HTTP/1.1" 200 522
+[29/Aug/2026 11:03:41] "GET /api/v1/livros/ HTTP/1.1" 200 574
+[29/Aug/2026 11:03:41] "GET /api/v1/categorias/?page_size=100 HTTP/1.1" 200 374
+[29/Aug/2026 11:03:41] "GET /api/v1/autores/?page_size=100 HTTP/1.1" 200 271
+[29/Aug/2026 11:03:41] "GET /api/v1/editoras/?page_size=100 HTTP/1.1" 200 224
+[29/Aug/2026 11:03:41] "GET /api/v1/livros/ HTTP/1.1" 200 574
+[29/Aug/2026 11:03:44] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 11:03:44] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 11:03:44] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 232
+[29/Aug/2026 11:03:52] "OPTIONS /api/v1/emprestimos/5/devolver/ HTTP/1.1" 200 0
+[29/Aug/2026 11:03:52] "POST /api/v1/emprestimos/5/devolver/ HTTP/1.1" 200 414
+[29/Aug/2026 11:03:52] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 52
+[29/Aug/2026 11:03:52] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 11:03:52] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 574
+[29/Aug/2026 11:03:52] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 52
+size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:53:14] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 548
+[29/Aug/2026 10:53:14] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+[29/Aug/2026 10:53:37] "GET /api/v1/usuarios/?page_size=100 HTTP/1.1" 200 1403
+[29/Aug/2026 10:53:37] "GET /api/v1/livros/?page_size=100 HTTP/1.1" 200 548
+[29/Aug/2026 10:53:37] "GET /api/v1/emprestimos/?ativo=true HTTP/1.1" 200 411
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\livros\models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 09:48:09
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\livros\serializers.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 10:53:42
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\emprestimos\serializers.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 29, 2026 - 10:53:48
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+C:\Users\isaias.vasilva\Desktop\FINAL\tecnico-biblioteca\emprestimos\views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 1 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): livros.
+Run 'python manage.py migrate' to apply them.
+August 29, 2026 - 10:54:06
+Django version 6.0.4, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader

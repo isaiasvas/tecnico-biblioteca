@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 )
  
 from livros.views import AutorViewSet, EditoraViewSet, CategoriaViewSet, LivroViewSet
-from usuarios.views import EnderecoViewSet, UsuarioViewSet
+from usuarios.views import EnderecoViewSet, UsuarioViewSet, RegisterView
 from emprestimos.views import EmprestimoViewSet
  
 router = DefaultRouter()
@@ -29,6 +29,7 @@ router.register(r'emprestimos', EmprestimoViewSet, basename='emprestimo')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
+    path('api/v1/register/', RegisterView.as_view(), name='register'),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

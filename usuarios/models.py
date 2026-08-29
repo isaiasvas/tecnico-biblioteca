@@ -58,6 +58,14 @@ class Usuario(models.Model):
         default=TipoUsuario.CONVIDADO,
     )
 
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='usuario',
+        null=True,
+        blank=True,
+    )
+
     adicionado_por = models.ForeignKey(
         User,
         on_delete=models.PROTECT,

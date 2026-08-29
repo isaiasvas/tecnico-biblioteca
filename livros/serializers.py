@@ -101,6 +101,7 @@ class LivroSerializer(serializers.ModelSerializer):
             'faixa_etaria',
             'endereco',
             'quantidade',
+            'quantidade_disponivel',
             'valor',
             'adicionado_por',
             'created_at',
@@ -112,6 +113,7 @@ class LivroSerializer(serializers.ModelSerializer):
             'editoras_info',
             'categoria_info',
             'tipo_emprestimo_display',
+            'quantidade_disponivel',
             'created_at',
             'updated_at',
         ]

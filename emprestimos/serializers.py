@@ -85,6 +85,13 @@ class EmprestimoSerializer(serializers.ModelSerializer):
                     {'usuario': 'Este usuário já possui um empréstimo ativo.'}
                 )
 
+        # Valida a disponibilidade de exemplares do livro.
+        if self.instance is None and livro is not None:
+            if livro.quantidade_disponivel <= 0:
+                raise serializers.ValidationError(
+                    {'livro': f'O livro "{livro.titulo}" não possui exemplares disponíveis no momento.'}
+                )
+
         data_limite = attrs.get('data_limite')
         if self.instance is None and data_limite is None:
             raise serializers.ValidationError(

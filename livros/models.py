@@ -121,6 +121,11 @@ class Livro(models.Model):
 
     endereco = models.CharField(max_length=30)
     quantidade = models.CharField(max_length=4)
+    quantidade_disponivel = models.PositiveIntegerField(
+        'Quantidade Disponível',
+        default=0,
+        help_text='Exemplares disponíveis para empréstimo (diminui/sobe automaticamente).',
+    )
     valor = models.FloatField('Valor do Livro (R$)', default=0.0)
 
     adicionado_por = models.ForeignKey(
@@ -139,3 +144,12 @@ class Livro(models.Model):
 
     def __str__(self):
         return self.titulo
+
+    def save(self, *args, **kwargs):
+        # Ao criar o livro, inicializa a quantidade disponível a partir do total.
+        if self._state.adding and self.quantidade_disponivel == 0 and self.quantidade:
+            try:
+                self.quantidade_disponivel = int(self.quantidade)
+            except (ValueError, TypeError):
+                self.quantidade_disponivel = 0
+        super().save(*args, **kwargs)

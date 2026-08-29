@@ -55,6 +55,30 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
         return EmprestimoSerializer
 
     # ------------------------------------------------------------------
+    # CRUD: decrementa/incrementa a quantidade disponível do livro
+    # ------------------------------------------------------------------
+    def perform_create(self, serializer):
+        # Revalida a disponibilidade para evitar corrida entre requisições.
+        livro = serializer.validated_data.get('livro')
+        if livro is not None and livro.quantidade_disponivel <= 0:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError({
+                'livro': f'O livro "{livro.titulo}" não possui exemplares disponíveis no momento.'
+            })
+        if livro is not None:
+            livro.quantidade_disponivel -= 1
+            livro.save(update_fields=['quantidade_disponivel'])
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        # Se o empréstimo ainda está ativo, devolve o exemplar ao estoque.
+        if instance.devolvido_at is None:
+            livro = instance.livro
+            livro.quantidade_disponivel += 1
+            livro.save(update_fields=['quantidade_disponivel'])
+        instance.delete()
+
+    # ------------------------------------------------------------------
     # Action: POST /emprestimos/{id}/devolver/
     # ------------------------------------------------------------------
     @action(detail=True, methods=['post'], url_path='devolver')
@@ -73,6 +97,11 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
         emprestimo.devolvido_at = serializer.validated_data['devolvido_at']
         emprestimo.multa_avaria = serializer.validated_data['multa_avaria']
         emprestimo.save()  # recalcula multa_atraso via model.save()
+
+        # Devolve o exemplar ao estoque disponível.
+        livro = emprestimo.livro
+        livro.quantidade_disponivel += 1
+        livro.save(update_fields=['quantidade_disponivel'])
 
         return Response(
             EmprestimoSerializer(emprestimo, context={'request': request}).data,
